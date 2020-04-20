@@ -71,14 +71,23 @@ DATA = [
     },
 ]
 
+def workers_function(workers):
+    new_workers = workers.copy()
+    new_workers['homeless'] =  new_workers['organization'] == ''
+    return new_workers
+
+def old_people_function(people):
+    new_people = people.copy()
+    new_people['old'] =  new_people['age'] > 30
+    return new_people
 
 def run():
 
-    all_python_devs =  # Using filter, generate a list with all the python devs
-    all_Platzi_workers =  # Using filter, generate a list with all the Platzi workers
-    adults =  # Using filter, generate a list with all people over 18 years old
-    workers =  # Using map, generate a new list of people with a key 'homeless' with True or False values, if 'organization' have something or not
-    old_people =  # Using map, generate a new list of people with a key 'old' with True or False values, if 'age' is greater than 30 or not
+    all_python_devs =  filter(lambda person: person['language'] == 'python',DATA)
+    all_Platzi_workers =  filter(lambda person: person['organization'] == 'Platzi',DATA)
+    adults =  filter(lambda person: person['age'] > 18 ,DATA)
+    workers = list(map(workers_function, DATA))
+    old_people = list(map(old_people_function, DATA))
 
     print('Python devs: ')
     for dev in all_python_devs:
